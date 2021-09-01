@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if not  mobile%}
+    <form action="{% url 'user:mobile_otp_verification' user.id %}" method="POST" >
+        <h1>Mobile Verification</h1>
+        {%csrf_token%}
+        <input type="number" name="otp" required>
+        <input type="hidden" name="otptype" value="mobile">
+       
+       
+        <button class="btn btn-warning">Verify Mobile number</button>
+    </form>
+     {%else%}
+     <h1>Email verification</h1>
+     <form action="{% url 'user:mobile_otp_verification' user.id %}" method="POST">
+        {%csrf_token%}
+        <input type="number" name="otp" requi>
+        <input type="hidden" name="otptype" value="email">
+       
+        <input type="hidden" name="user1" value="{{user1.id}}">
+
+        
+        <button class="btn btn-warning">Verify Email number</button>
+    </form>
+     {%endif%}   
+</body>
+</html>
